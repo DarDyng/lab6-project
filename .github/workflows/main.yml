@@ -1,0 +1,30 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Клонування репозиторію
+      uses: actions/checkout@v3
+
+    - name: 🔧 Встановлення Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: 📦 Встановлення залежностей (якщо є)
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: 🧪 Запуск тестів (умовно)
+      run: |
+        echo "Тут могли б бути ваші тести 🙂"
+        python main.py
